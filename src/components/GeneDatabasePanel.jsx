@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.j
 import { Alert, AlertDescription } from '@/components/ui/alert.jsx'
 import { X, Search, Loader2, Database, ExternalLink, Dna } from 'lucide-react'
 import DetailedView from './DetailedView'
+import API_CONFIG, { buildApiUrl } from '../config/api'
 
 const GeneDatabasePanel = ({ database, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -35,7 +36,7 @@ const GeneDatabasePanel = ({ database, onClose }) => {
       let response
       
       if (database === 'ncbi') {
-        response = await fetch('/api/gene-db/ncbi/search', {
+        response = await fetch(buildApiUrl('/api/gene-db/ncbi/search'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -45,9 +46,9 @@ const GeneDatabasePanel = ({ database, onClose }) => {
           })
         })
       } else if (database === 'ensembl') {
-        response = await fetch(`/api/gene-db/ensembl/search/${species}/${searchTerm}`)
+        response = await fetch(buildApiUrl(`/api/gene-db/ensembl/search/${species}/${searchTerm}`))
       } else if (database === 'uniprot') {
-        response = await fetch('/api/gene-db/uniprot/search', {
+        response = await fetch(buildApiUrl('/api/gene-db/uniprot/search'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -81,7 +82,7 @@ const GeneDatabasePanel = ({ database, onClose }) => {
     setSequenceResults(null)
 
     try {
-      const response = await fetch('/api/integrated/search', {
+      const response = await fetch(buildApiUrl('/api/integrated/search'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

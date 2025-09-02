@@ -7,6 +7,7 @@ import heroImage from './assets/hero_image--aZn_6m-.png'
 import heatmapImage from './assets/heatmap-BC9boYhD.png'
 import pathwayImage from './assets/pathway_map-B_8VAfjx.png'
 import GeneDatabasePanel from './components/GeneDatabasePanel'
+import API_CONFIG, { buildApiUrl } from './config/api'
 import './App.css'
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
 
   // Check database status on component mount
   useState(() => {
-    fetch('/api/gene-db/status')
+    fetch(buildApiUrl(API_CONFIG.ENDPOINTS.GENE_DB_STATUS))
       .then(res => res.json())
       .then(data => setDatabaseStatus(data))
       .catch(err => console.error('Failed to fetch database status:', err))
